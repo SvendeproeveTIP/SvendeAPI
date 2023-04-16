@@ -1,3 +1,6 @@
+// Global using Models
+global using LeMounAPI.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
