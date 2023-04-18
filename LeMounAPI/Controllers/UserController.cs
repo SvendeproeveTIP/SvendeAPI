@@ -11,22 +11,21 @@ namespace LeMounAPI.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private static List<User> Users = new List<User>
-            {
-                new User
-                {   UserId = 1,
-                    Email = "test",
-                    Password = "1234",
-                    StatusId = 1,
-                    RoleId = 1
-                }
-            };
+        private readonly IModelService<User> _modelService;
+
+        public UserController(IModelService<User> modelService)
+        {
+            _modelService = modelService;
+        }
+
         [HttpGet]
         // Not using the IActionResult interface will allow us to show an Example Value in Swagger.
 
         public async Task<ActionResult<User>> GetAll()
         {
-            return Ok(Users);
+            var result = _modelService.GetAll();
+
+            return Ok(result);
         }
 
         [HttpGet("{id}")]
@@ -36,57 +35,34 @@ namespace LeMounAPI.Controllers
 
             //return Ok(user);
 
-            var user = Users.FirstOrDefault(x => x.UserId == id);
-
-            if (user == null)
-            {
-                return BadRequest("User not found");
-            }
-
-            return Ok(user);
+            var result = _modelService.Get(id);
+            return Ok(result);
         }
 
         [HttpPost]
         public async Task<ActionResult<User>> CreateUser(User user)
         {
-            Users.Add(user);
-
-            return Ok(Users);
+            _modelService.Add(user);
+            return Ok(user);
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<User>> UpdateUser(long id, User updatedUser)
+        public async Task<ActionResult<User>> UpdateUser(long id, [FromBody] User updatedUser)
         {
-            var user = Users.FirstOrDefault(x => x.UserId == id);
+            var result = _modelService.Update(id, updatedUser);
 
-            if (user == null)
-            {
-                return BadRequest("user not found");
-            }
-            else
-            {
-                user.UserId = updatedUser.UserId;
-                user.Email = updatedUser.Email;
-                user.Password = updatedUser.Password;
-                user.RoleId = updatedUser.RoleId;
-                user.StatusId = updatedUser.StatusId;
-
-                return Ok(user);
-            }
+            return result;
         }
+
+        //Right now the Delete returns a 500 internal error if user not found NEEDS fixing 
 
         [HttpDelete("{id}")]
         public async Task<ActionResult<User>> DeleteUserById(long id)
         {
-            var user = Users.FirstOrDefault(x => x.UserId == id);
+            
+             _modelService.Delete(id);
 
-            if (user == null)
-            {
-                return BadRequest();
-            }
-
-            Users.Remove(user);
-            return Ok("User deleted");
+            return Ok($"User Deleted, user id: {id}");
         }
     }
 }

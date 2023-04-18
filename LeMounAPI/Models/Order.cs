@@ -11,7 +11,6 @@ namespace LeMounAPI.Models
 		[Key]
 		public int OrderId { get; set; }
 		public DateTime OrderDate { get; set; }
-		public bool MyProperty { get; set; }
 		public bool OrderEnded { get; set; }
 		public DateTime EndDate { get; set; }
 		public double Price { get; set; }

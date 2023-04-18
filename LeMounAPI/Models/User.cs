@@ -30,7 +30,7 @@ namespace LeMounAPI.Models
 
 
 		// A Collection of all Orders connected to the User Id
-		//public virtual ICollection<Order> Orders { get; set; }
+		public virtual ICollection<Order> Orders { get; set; } 
 	}
 }
 
