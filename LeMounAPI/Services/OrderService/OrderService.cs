@@ -1,77 +1,90 @@
 ﻿using System;
+using AutoMapper.QueryableExtensions;
 
 namespace LeMounAPI.Services.OrderService
 {
-    public class OrderService : IModelService<Order>
+    public class OrderService : IModelService<OrderModel>
     {
-        private List<Order> Orders = new List<Order>
-        {
-            new Order
-            {
-                OrderId = 1,
-                OrderDate = DateTime.Now,
-                OrderEnded = false,
-                EndDate = DateTime.Now.AddHours(2),
-                UserId = 1,
-                VehicleId = 1
-            },
-            new Order
-            {
-                OrderId = 2,
-                OrderDate = DateTime.Now,
-                OrderEnded = false,
-                EndDate = DateTime.Now.AddHours(1),
-                UserId = 2,
-                VehicleId = 2
-            }
-        };
+        // Creating a reference to Data context and IMapper
+        private readonly DataContext _context;
+        private readonly IMapper _mapper;
 
-        public void Add(Order order)
+        // Creating a constructor, that initializez the context and mapper.
+        public OrderService(DataContext context, IMapper mapper)
         {
-            Orders.Add(order);
+            _context = context;
+            _mapper = mapper;
         }
 
-        public void Delete(long id)
+        // Gets list of all users and maps them out to the models.
+        public async Task<List<OrderModel>> GetAll()
         {
-            var order = Orders.FirstOrDefault(x => x.OrderId == id);
+            var orders = await _context.Orders
+                .ProjectTo<OrderModel>(_mapper.ConfigurationProvider).ToListAsync();
+
+            return orders;
+        }
+
+        // Gets user by an Id and returns a UserModel that is mapped to a User entity.
+        public async Task<OrderModel> Get(long id)
+        {
+            var order = await _context.Orders.FirstOrDefaultAsync(x => x.OrderId == id);
 
             if (order is null)
             {
                 throw new IdNotFoundException(id);
             }
+
+            return _mapper.Map<OrderModel>(order);
         }
 
-        public Order Get(long id)
+        // Creates an UserModel and returns it.
+        public async Task<OrderModel> Add(OrderModel order)
         {
-            var order = Orders.FirstOrDefault(x => x.OrderId == id);
-
-            if (order is null)
-            {
-                throw new IdNotFoundException(id);
-            }
+            var Order = new Order(order.OrderDate, order.OrderEnded, order.Price, order.UserId, order.VehicleId);
+            await _context.Orders.AddAsync(Order);
+            _context.SaveChanges();
 
             return order;
         }
 
-        public List<Order> GetAll()
+        // Finds the first user that has the same id as the argument it takes, if found it updates the UserModel with the same data as fed.
+        // Otherwise throws and exception.
+        // Returns an Entity that is mapped out to the model. reason for this is to return only the needed data and not all sensitive data.
+        public async Task<OrderModel> Update(long id, OrderModel updatedOrder)
         {
-            return Orders;
+            var order = await _context.Orders.FirstOrDefaultAsync(x => x.UserId == id);
+
+            if (order is null)
+            {
+                throw new IdNotFoundException(id);
+            }
+            else
+            {
+                order.EndDate = updatedOrder.EndDate;
+                order.OrderDate = updatedOrder.OrderDate;
+                order.OrderEnded = updatedOrder.OrderEnded;
+                order.Price = updatedOrder.Price;
+            }
+
+            _context.Orders.Update(order);
+            _context.SaveChanges();
+
+            return _mapper.Map<OrderModel>(order);
         }
 
-        // This needs to get updated and fixed, because right now you are able to update the whole order.
-
-        public Order Update(long id, Order updatedOrder)
+        // Finds the first user that has the same id as the argument it takes, if found removes the user, if not throws exception.
+        public async Task Delete(long id)
         {
-            var order = Orders.FirstOrDefault(x => x.OrderId == id);
+            var order = await _context.Orders.FirstOrDefaultAsync(x => x.OrderId == id);
 
             if (order is null)
             {
                 throw new IdNotFoundException(id);
             }
 
-            order = updatedOrder;
-
-            return order;
+            _context.Orders.Remove(order);
+            _context.SaveChanges();
         }
     }
 }

@@ -19,15 +19,15 @@ namespace LeMounAPI.Services
         // return type is void for Add, Update and Delete, but we can change it eventually to and TEntity.
         // So that when we call it we choose which return type to give it, if we wanna return the deleted user for example.
 
-        List<TEntity> GetAll();
+        Task<List<TEntity>> GetAll();
 
-		TEntity Get(long id);
+		Task<TEntity> Get(long id);
 
-		void Add(TEntity entity);
+		Task<TEntity> Add(TEntity entity);
 
-		TEntity Update(long id, TEntity entity);
+		Task<TEntity> Update(long id, TEntity entity);
 
-		void Delete(long id);
+		Task Delete(long id);
 	}
 }
 

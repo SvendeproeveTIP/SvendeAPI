@@ -7,8 +7,13 @@ namespace LeMounAPI.Models
     public class VehicleType
 	{
 		[Key]
-		public int TypeId { get; set; }
+		public long TypeId { get; set; }
 		public string Type { get; set; }
+
+		public VehicleType(string type)
+		{
+			Type = type;
+		}
 
 	}
 }

@@ -11,9 +11,9 @@ namespace LeMounAPI.Controllers
     [ApiController]
     public class OrderController : ControllerBase
     {
-        private readonly IModelService<Order> _modelService;
+        private readonly IModelService<OrderModel> _modelService;
 
-        public OrderController(IModelService<Order> modelService)
+        public OrderController(IModelService<OrderModel> modelService)
         {
             _modelService = modelService;
         }
@@ -21,32 +21,32 @@ namespace LeMounAPI.Controllers
         [HttpGet]
         // Not using the IActionResult interface will allow us to show an Example Value in Swagger.
 
-        public async Task<ActionResult<Order>> GetAll()
+        public async Task<ActionResult<OrderModel>> GetAll()
         {
-            var result = _modelService.GetAll();
+            var result = await _modelService.GetAll();
 
             return Ok(result);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Order>> Get(long id)
+        public async Task<ActionResult<OrderModel>> Get(long id)
         {
 
-            var result = _modelService.Get(id);
+            var result =  _modelService.Get(id);
             return Ok(result);
         }
 
         [HttpPost]
-        public async Task<ActionResult<Order>> CreateUser(Order order)
+        public async Task<ActionResult<OrderModel>> CreateUser(OrderModel order)
         {
-            _modelService.Add(order);
+            await _modelService.Add(order);
             return Ok(order);
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<Order>> UpdateUser(long id, [FromBody] Order updatedOrder)
+        public async Task<ActionResult<OrderModel>> UpdateUser(long id, [FromBody] OrderModel updatedOrder)
         {
-            var result = _modelService.Update(id, updatedOrder);
+            var result = await _modelService.Update(id, updatedOrder);
 
             return result;
         }
@@ -54,10 +54,10 @@ namespace LeMounAPI.Controllers
         //Right now the Delete returns a 500 internal error if user not found NEEDS fixing 
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Order>> DeleteOrderById(long id)
+        public async Task<ActionResult<OrderModel>> DeleteOrderById(long id)
         {
 
-            _modelService.Delete(id);
+            await _modelService.Delete(id);
 
             return Ok($"Order Deleted, user id: {id}");
         }

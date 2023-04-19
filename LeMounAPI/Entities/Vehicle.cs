@@ -9,10 +9,10 @@ namespace LeMounAPI.Models
 	public class Vehicle
 	{
 		[Key]
-		public int VehicleId { get; set; }
+		public long VehicleId { get; set; }
 		public string VehicleName { get; set; }
-		public decimal startupPrice { get; set; }
-		public bool isRented { get; set; }
+		public decimal StartupPrice { get; set; }
+		public bool IsRented { get; set; }
 		public double Battery { get; set; }
 		public decimal Lattitude { get; set; }
 		public decimal Longtitude { get; set; }
@@ -21,8 +21,19 @@ namespace LeMounAPI.Models
 		// Foreign key to Vehicle Type table
 
 		[ForeignKey("Type")]
-		public int TypeId { get; set; }
+		public long TypeId { get; set; }
 		public virtual VehicleType Type { get; set; }
+
+		public Vehicle(string vehicleName, decimal startupPrice, bool isRented, double battery, decimal lattitude, decimal longtitude, bool underMaintenance)
+		{
+			VehicleName = vehicleName;
+			StartupPrice = startupPrice;
+			IsRented = isRented;
+			Battery = battery;
+			Lattitude = lattitude;
+			Longtitude = longtitude;
+			UnderMaintenance = underMaintenance;
+		}
 	}
 }
 

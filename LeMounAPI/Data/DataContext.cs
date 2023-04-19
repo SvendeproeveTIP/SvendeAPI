@@ -5,15 +5,7 @@ namespace LeMounAPI.Data
 	{
 		public DataContext(DbContextOptions<DataContext> options) : base(options)
 		{
-
 		}
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseMySql(new MySqlServerVersion(new Version(10, 11, 2)));
-        }
-
         // Database sets AKA Database tables.
 
         public DbSet<Order> Orders { get; set; }

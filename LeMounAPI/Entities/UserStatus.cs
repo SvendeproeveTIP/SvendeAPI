@@ -7,8 +7,13 @@ namespace LeMounAPI.Models
     public class UserStatus
 	{
 		[Key]
-		public int StatusId { get; set; }
+		public long StatusId { get; set; }
 		public string StatusName { get; set; }
+
+		public UserStatus(string statusName)
+		{
+			StatusName = statusName;
+		}
 	}
 }
 
