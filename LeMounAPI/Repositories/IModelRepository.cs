@@ -1,7 +1,7 @@
 ﻿using System;
-namespace LeMounAPI.Services
+namespace LeMounAPI.Repositories
 {
-	public interface IModelService<TEntity>
+	public interface IModelRepository<TEntity>
 	{
         //List<User> GetUsers();    ---> All of this is is just incase want to make a IService interface for all models.
 

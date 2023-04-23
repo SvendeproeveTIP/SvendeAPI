@@ -11,9 +11,9 @@ namespace LeMounAPI.Controllers
     [ApiController]
     public class OrderController : ControllerBase
     {
-        private readonly IModelService<OrderModel> _modelService;
+        private readonly IModelRepository<OrderModel> _modelService;
 
-        public OrderController(IModelService<OrderModel> modelService)
+        public OrderController(IModelRepository<OrderModel> modelService)
         {
             _modelService = modelService;
         }
@@ -32,7 +32,7 @@ namespace LeMounAPI.Controllers
         public async Task<ActionResult<OrderModel>> Get(long id)
         {
 
-            var result =  _modelService.Get(id);
+            var result =  await _modelService.Get(id);
             return Ok(result);
         }
 

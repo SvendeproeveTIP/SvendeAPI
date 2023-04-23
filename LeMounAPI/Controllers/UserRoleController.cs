@@ -9,11 +9,11 @@ namespace LeMounAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserStatusController : ControllerBase
+    public class UserRoleController : ControllerBase
     {
-        private readonly IModelRepository<UserStatusModel> _modelService;
+        private readonly IModelRepository<UserRoleModel> _modelService;
 
-        public UserStatusController(IModelRepository<UserStatusModel> modelService)
+        public UserRoleController(IModelRepository<UserRoleModel> modelService)
         {
             _modelService = modelService;
         }
@@ -21,7 +21,7 @@ namespace LeMounAPI.Controllers
         [HttpGet]
         // Not using the IActionResult interface will allow us to show an Example Value in Swagger.
 
-        public async Task<ActionResult<UserStatusModel>> GetAll()
+        public async Task<ActionResult<UserRoleModel>> GetAll()
         {
             var result = await _modelService.GetAll();
 
@@ -29,7 +29,7 @@ namespace LeMounAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<UserStatusModel>> Get(long id)
+        public async Task<ActionResult<UserRoleModel>> Get(long id)
         {
 
             var result = await _modelService.Get(id);
@@ -37,16 +37,16 @@ namespace LeMounAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<UserStatusModel>> CreateUser(UserStatusModel userStatus)
+        public async Task<ActionResult<UserRoleModel>> CreateUser(UserRoleModel userRole)
         {
-            await _modelService.Add(userStatus);
-            return Ok(userStatus);
+            await _modelService.Add(userRole);
+            return Ok(userRole);
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<UserStatusModel>> UpdateUser(long id, [FromBody] UserStatusModel updatedStatus)
+        public async Task<ActionResult<UserRoleModel>> UpdateUser(long id, [FromBody] UserRoleModel updatedRole)
         {
-            var result = await _modelService.Update(id, updatedStatus);
+            var result = await _modelService.Update(id, updatedRole);
 
             return result;
         }
@@ -54,7 +54,7 @@ namespace LeMounAPI.Controllers
         //Right now the Delete returns a 500 internal error if user not found NEEDS fixing 
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<UserStatusModel>> DeleteOrderById(long id)
+        public async Task<ActionResult<UserRoleModel>> DeleteOrderById(long id)
         {
 
             await _modelService.Delete(id);

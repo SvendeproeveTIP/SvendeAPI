@@ -27,22 +27,28 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Services\" />
     <None Remove="Services\UserService\" />
     <None Remove="Data\" />
-    <None Remove="Services\OrderService\" />
     <None Remove="Services\IdNotFoundException" />
     <None Remove="Models\" />
     <None Remove="Mappings\" />
+    <None Remove="Repositories\VehicleRepository\" />
+    <None Remove="Repositories\VehicleTypeRepository\" />
+    <None Remove="Repositories\UserRoleRepository\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Services\" />
-    <Folder Include="Services\UserService\" />
     <Folder Include="Data\" />
-    <Folder Include="Services\OrderService\" />
-    <Folder Include="Services\IdNotFoundException" />
-
     <Folder Include="Models\" />
     <Folder Include="Mappings\" />
+    <Folder Include="Repositories" />
+    <Folder Include="Repositories/UserRepository" />
+    <Folder Include="Repositories/IdNotFoundException" />
+    <Folder Include="Repositories/OrderRepository" />
+    <Folder Include="Repositories/UserStatusRepository" />
+
+
+    <Folder Include="Repositories\VehicleRepository\" />
+    <Folder Include="Repositories\VehicleTypeRepository\" />
+    <Folder Include="Repositories\UserRoleRepository\" />
   </ItemGroup>
 </Project>

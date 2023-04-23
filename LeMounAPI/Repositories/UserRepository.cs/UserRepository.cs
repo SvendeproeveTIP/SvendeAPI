@@ -2,9 +2,9 @@
 using AutoMapper.QueryableExtensions;
 using LeMounAPI.Models;
 
-namespace LeMounAPI.Services.UserService
+namespace LeMounAPI.Repositories.UserRepository
 {
-    public class UserService : IModelService<UserModel>
+    public class UserRepository : IModelRepository<UserModel>
     {
 
         // Creating a reference to Data context and IMapper
@@ -13,7 +13,7 @@ namespace LeMounAPI.Services.UserService
 
 
         // Creating a constructor, that initializez the context and mapper.
-        public UserService(DataContext context, IMapper mapper)
+        public UserRepository(DataContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;

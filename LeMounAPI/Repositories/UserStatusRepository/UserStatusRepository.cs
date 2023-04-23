@@ -1,15 +1,15 @@
 ﻿using System;
 
-namespace LeMounAPI.Services.StatusService
+namespace LeMounAPI.Repositories.UserStatusRepository
 {
-	public class UserStatusService : IModelService<UserStatusModel>
+	public class UserStatusRepository : IModelRepository<UserStatusModel>
 	{
         // Creating a reference to Data context and IMapper
         private readonly DataContext _context;
 		private readonly IMapper _mapper;
 
         // Creating a constructor, that initializez the context and mapper.
-        public UserStatusService(DataContext context, IMapper mapper)
+        public UserStatusRepository(DataContext context, IMapper mapper)
 		{
 			_context = context;
 			_mapper = mapper;

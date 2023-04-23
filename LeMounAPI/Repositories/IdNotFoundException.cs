@@ -1,5 +1,5 @@
 ﻿using System;
-namespace LeMounAPI.Services
+namespace LeMounAPI.Repositories
 {
 	public class IdNotFoundException : Exception
 	{

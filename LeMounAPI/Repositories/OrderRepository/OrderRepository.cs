@@ -1,16 +1,16 @@
 ﻿using System;
 using AutoMapper.QueryableExtensions;
 
-namespace LeMounAPI.Services.OrderService
+namespace LeMounAPI.Repositories.OrderRepository
 {
-    public class OrderService : IModelService<OrderModel>
+    public class OrderRepository : IModelRepository<OrderModel>
     {
         // Creating a reference to Data context and IMapper
         private readonly DataContext _context;
         private readonly IMapper _mapper;
 
         // Creating a constructor, that initializez the context and mapper.
-        public OrderService(DataContext context, IMapper mapper)
+        public OrderRepository(DataContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
@@ -42,6 +42,7 @@ namespace LeMounAPI.Services.OrderService
         public async Task<OrderModel> Add(OrderModel order)
         {
             var Order = new Order(order.OrderDate, order.OrderEnded, order.Price, order.UserId, order.VehicleId);
+
             await _context.Orders.AddAsync(Order);
             _context.SaveChanges();
 
@@ -53,7 +54,7 @@ namespace LeMounAPI.Services.OrderService
         // Returns an Entity that is mapped out to the model. reason for this is to return only the needed data and not all sensitive data.
         public async Task<OrderModel> Update(long id, OrderModel updatedOrder)
         {
-            var order = await _context.Orders.FirstOrDefaultAsync(x => x.UserId == id);
+            var order = await _context.Orders.FirstOrDefaultAsync(x => x.OrderId == id);
 
             if (order is null)
             {

@@ -24,7 +24,7 @@ namespace LeMounAPI.Models
 		public long TypeId { get; set; }
 		public virtual VehicleType Type { get; set; }
 
-		public Vehicle(string vehicleName, decimal startupPrice, bool isRented, double battery, decimal lattitude, decimal longtitude, bool underMaintenance)
+		public Vehicle(string vehicleName, decimal startupPrice, bool isRented, double battery, decimal lattitude, decimal longtitude, bool underMaintenance, long typeId)
 		{
 			VehicleName = vehicleName;
 			StartupPrice = startupPrice;
@@ -33,6 +33,7 @@ namespace LeMounAPI.Models
 			Lattitude = lattitude;
 			Longtitude = longtitude;
 			UnderMaintenance = underMaintenance;
+			TypeId = typeId;
 		}
 	}
 }

@@ -11,9 +11,9 @@ namespace LeMounAPI.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IModelService<UserModel> _modelService;
+        private readonly IModelRepository<UserModel> _modelService;
 
-        public UserController(IModelService<UserModel> modelService)
+        public UserController(IModelRepository<UserModel> modelService)
         {
             _modelService = modelService;
         }

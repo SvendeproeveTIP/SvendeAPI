@@ -1,7 +1,7 @@
 // Global using Models
 global using LeMounAPI.Models;
 // Global accesing Services folder
-global using LeMounAPI.Services;
+global using LeMounAPI.Repositories;
 global using Microsoft.EntityFrameworkCore;
 global using LeMounAPI.Data;
 // Global access to Auto mapper
@@ -10,9 +10,12 @@ global using AutoMapper.QueryableExtensions;
 
 
 // Global accesing lower tree of Services folder
-using LeMounAPI.Services.UserService;
-using LeMounAPI.Services.OrderService;
-using LeMounAPI.Services.StatusService;
+using LeMounAPI.Repositories.UserRepository;
+using LeMounAPI.Repositories.OrderRepository;
+using LeMounAPI.Repositories.UserStatusRepository;
+using LeMounAPI.Repositories.UserRoleRepository;
+using LeMounAPI.Repositories.VehicleRepository;
+using LeMounAPI.Repositories.VehicleTypeRepository;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -34,9 +37,12 @@ builder.Services.AddDbContext<DataContext>(options =>
 });
 
 // Registering the Services
-builder.Services.AddScoped<IModelService<UserModel>, UserService>();
-builder.Services.AddScoped<IModelService<OrderModel>, OrderService>();
-builder.Services.AddScoped<IModelService<UserStatusModel>, UserStatusService>();
+builder.Services.AddScoped<IModelRepository<UserModel>, UserRepository>();
+builder.Services.AddScoped<IModelRepository<OrderModel>, OrderRepository>();
+builder.Services.AddScoped<IModelRepository<UserStatusModel>, UserStatusRepository>();
+builder.Services.AddScoped<IModelRepository<UserRoleModel>, UserRoleRepository>();
+builder.Services.AddScoped<IModelRepository<VehicleModel>, VehicleRepository>();
+builder.Services.AddScoped<IModelRepository<VehicleTypeModel>, VehicleTypeRepository>();
 // Registering the DBContext
 //builder.Services.AddDbContext<DataContext>();
 
