@@ -21,6 +21,7 @@ namespace LeMounAPI.Controllers
         [HttpGet]
         // Not using the IActionResult interface will allow us to show an Example Value in Swagger.
 
+        // Get all
         public async Task<ActionResult<UserStatusModel>> GetAll()
         {
             var result = await _modelService.GetAll();
@@ -28,6 +29,7 @@ namespace LeMounAPI.Controllers
             return Ok(result);
         }
 
+        // Get by Id
         [HttpGet("{id}")]
         public async Task<ActionResult<UserStatusModel>> Get(long id)
         {
@@ -36,25 +38,26 @@ namespace LeMounAPI.Controllers
             return Ok(result);
         }
 
+        // Create UserStatus
         [HttpPost]
-        public async Task<ActionResult<UserStatusModel>> CreateUser(UserStatusModel userStatus)
+        public async Task<ActionResult<UserStatusModel>> CreateUserStatus(UserStatusModel userStatus)
         {
             await _modelService.Add(userStatus);
             return Ok(userStatus);
         }
 
+        // Update by id
         [HttpPut("{id}")]
-        public async Task<ActionResult<UserStatusModel>> UpdateUser(long id, [FromBody] UserStatusModel updatedStatus)
+        public async Task<ActionResult<UserStatusModel>> UpdateUserStatus(long id, [FromBody] UserStatusModel updatedStatus)
         {
             var result = await _modelService.Update(id, updatedStatus);
 
             return result;
         }
 
-        //Right now the Delete returns a 500 internal error if user not found NEEDS fixing 
-
+        // Delete by id 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<UserStatusModel>> DeleteOrderById(long id)
+        public async Task<ActionResult<UserStatusModel>> DeleteUserStatusById(long id)
         {
 
             await _modelService.Delete(id);

@@ -7,8 +7,8 @@ global using LeMounAPI.Data;
 // Global access to Auto mapper
 global using AutoMapper;
 global using AutoMapper.QueryableExtensions;
-
-
+// Global access to Exceptions
+using LeMounAPI.Repositories.CustomExceptions;
 // Global accesing lower tree of Services folder
 using LeMounAPI.Repositories.UserRepository;
 using LeMounAPI.Repositories.OrderRepository;
@@ -37,8 +37,8 @@ builder.Services.AddDbContext<DataContext>(options =>
 });
 
 // Registering the Services
-builder.Services.AddScoped<IModelRepository<UserModel>, UserRepository>();
 builder.Services.AddScoped<IModelRepository<OrderModel>, OrderRepository>();
+builder.Services.AddScoped<IModelRepository<UserModel>, UserRepository>();
 builder.Services.AddScoped<IModelRepository<UserStatusModel>, UserStatusRepository>();
 builder.Services.AddScoped<IModelRepository<UserRoleModel>, UserRoleRepository>();
 builder.Services.AddScoped<IModelRepository<VehicleModel>, VehicleRepository>();

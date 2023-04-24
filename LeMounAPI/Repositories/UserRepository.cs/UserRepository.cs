@@ -1,6 +1,6 @@
 ﻿using System;
 using AutoMapper.QueryableExtensions;
-using LeMounAPI.Models;
+using LeMounAPI.Repositories.CustomExceptions;
 
 namespace LeMounAPI.Repositories.UserRepository
 {
@@ -43,7 +43,10 @@ namespace LeMounAPI.Repositories.UserRepository
 
             await _context.Users.AddAsync(User);
             _context.SaveChanges();
-            return user;
+
+            var fetchUser = await _context.Users.FirstOrDefaultAsync(x => x.UserId == User.UserId);
+
+            return _mapper.Map<UserModel>(fetchUser);
         }
 
 

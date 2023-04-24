@@ -13,6 +13,7 @@ namespace LeMounAPI.Mappings
 			CreateMap<UserStatus, UserStatusModel>();
 			CreateMap<Vehicle, VehicleModel>();
 			CreateMap<VehicleType, VehicleTypeModel>();
+
 		}
 	}
 }

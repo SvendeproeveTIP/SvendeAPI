@@ -1,4 +1,5 @@
 ﻿using System;
+using LeMounAPI.Repositories.CustomExceptions;
 
 namespace LeMounAPI.Repositories.UserStatusRepository
 {
@@ -24,7 +25,7 @@ namespace LeMounAPI.Repositories.UserStatusRepository
             return userStatuses;
         }
 
-        // Gets user by an Id and returns a UserMoUserStatusModel that is mapped to a User entity.
+        // Gets status by an Id and returns a UserStatusModel that is mapped to a User entity.
         public async Task<UserStatusModel> Get(long id)
         {
             var userStatus = await _context.Statuses.FirstOrDefaultAsync(x => x.StatusId == id);
@@ -70,6 +71,7 @@ namespace LeMounAPI.Repositories.UserStatusRepository
             return _mapper.Map<UserStatusModel>(userStatus);
         }
 
+        // Finds the first status that has the same id as the argument it takes, if found removes the role, if not throws exception.
         public async Task Delete(long id)
         {
             var userStatus = await _context.Statuses.FirstOrDefaultAsync(x => x.StatusId == id);

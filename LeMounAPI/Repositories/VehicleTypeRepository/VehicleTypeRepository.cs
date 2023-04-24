@@ -1,5 +1,6 @@
 ﻿using System;
 using LeMounAPI.Models;
+using LeMounAPI.Repositories.CustomExceptions;
 
 namespace LeMounAPI.Repositories.VehicleTypeRepository
 {
@@ -23,7 +24,7 @@ namespace LeMounAPI.Repositories.VehicleTypeRepository
                 ProjectTo<VehicleTypeModel>(_mapper.ConfigurationProvider).ToListAsync();
             return vehicleTypes;
         }
-
+        // Gets vehicle by an Id and returns a VehicleModel that is mapped to a Vehicle entity.
         public async Task<VehicleTypeModel> Get(long id)
         {
             var vehicleType = await _dataContext.VehicleTypes.FirstOrDefaultAsync(x => x.TypeId == id);
@@ -35,7 +36,7 @@ namespace LeMounAPI.Repositories.VehicleTypeRepository
 
             return _mapper.Map<VehicleTypeModel>(vehicleType);
         }
-
+        // Creates an VehicleTypeModel and returns it.
         public async Task<VehicleTypeModel> Add(VehicleTypeModel vehicleType)
         {
             var type = new VehicleType(vehicleType.Type);
@@ -46,7 +47,9 @@ namespace LeMounAPI.Repositories.VehicleTypeRepository
             return vehicleType;
         }
 
-
+        // Finds the first vehicleType that has the same id as the argument it takes, if found it updates the VehicleTypeModel with the same data as fed.
+        // Otherwise throws and exception.
+        // Returns an Entity that is mapped out to the model. reason for this is to return only the needed data and not all sensitive data.
         public async Task<VehicleTypeModel> Update(long id, VehicleTypeModel vehicleType)
         {
             var type = await _dataContext.VehicleTypes.FirstOrDefaultAsync(x => x.TypeId == id);
@@ -64,6 +67,7 @@ namespace LeMounAPI.Repositories.VehicleTypeRepository
             return vehicleType;
         }
 
+        // Finds the first vehicleType that has the same id as the argument it takes, if found removes the vehicle, if not throws exception.
         public async Task Delete(long id)
         {
             var vehicleType = await _dataContext.VehicleTypes.FirstOrDefaultAsync(x => x.TypeId == id);

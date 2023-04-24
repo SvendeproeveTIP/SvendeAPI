@@ -1,18 +1,22 @@
 ﻿using System;
+using LeMounAPI.Repositories.CustomExceptions;
 
 namespace LeMounAPI.Repositories.UserRoleRepository
 {
 	public class UserRoleRepository : IModelRepository<UserRoleModel>
 	{
-		private readonly DataContext _dataContext;
+        // Creating a reference to Data context and IMapper
+        private readonly DataContext _dataContext;
 		private readonly IMapper _mapper;
 
-		public UserRoleRepository(DataContext dataContext, IMapper mapper)
+        // Creating a constructor, that initializez the context and mapper.
+        public UserRoleRepository(DataContext dataContext, IMapper mapper)
 		{
 			_dataContext = dataContext;
 			_mapper = mapper;
 		}
 
+        // Gets list of all userRoles and maps them out to the models.
         public async Task<List<UserRoleModel>> GetAll()
         {
             var userRoles = await _dataContext.Roles.
@@ -21,6 +25,7 @@ namespace LeMounAPI.Repositories.UserRoleRepository
             return userRoles;
         }
 
+        // Gets userRole by an Id and returns a UserRoleModel that is mapped to a User entity.
         public async Task<UserRoleModel> Get(long id)
         {
             var userRole = await _dataContext.Roles.FirstOrDefaultAsync(x => x.RoleId == id);
@@ -33,6 +38,7 @@ namespace LeMounAPI.Repositories.UserRoleRepository
             return _mapper.Map<UserRoleModel>(userRole);
         }
 
+        // Creates an UserRoleModel and returns it.
         public async Task<UserRoleModel> Add(UserRoleModel userRole)
         {
             var UserRole = new UserRole(userRole.Role);
@@ -43,6 +49,9 @@ namespace LeMounAPI.Repositories.UserRoleRepository
             return userRole;
         }
 
+        // Finds the first role that has the same id as the argument it takes, if found it updates the UserRoleModel with the same data as fed.
+        // Otherwise throws and exception.
+        // Returns an Entity that is mapped out to the model. reason for this is to return only the needed data and not all sensitive data.
         public async Task<UserRoleModel> Update(long id, UserRoleModel userRole)
         {
             var UserRole = await _dataContext.Roles.FirstOrDefaultAsync(x => x.RoleId == id);
@@ -63,6 +72,7 @@ namespace LeMounAPI.Repositories.UserRoleRepository
             return userRole;
         }
 
+        // Finds the first role that has the same id as the argument it takes, if found removes the role, if not throws exception.
         public async Task Delete(long id)
         {
             var userRole = await _dataContext.Roles.FirstOrDefaultAsync(x => x.RoleId == id);

@@ -21,6 +21,7 @@ namespace LeMounAPI.Controllers
         [HttpGet]
         // Not using the IActionResult interface will allow us to show an Example Value in Swagger.
 
+        // Get all
         public async Task<ActionResult<VehicleModel>> GetAll()
         {
             var result = await _modelService.GetAll();
@@ -28,6 +29,7 @@ namespace LeMounAPI.Controllers
             return Ok(result);
         }
 
+        // Get by id 
         [HttpGet("{id}")]
         public async Task<ActionResult<VehicleModel>> Get(long id)
         {
@@ -36,25 +38,26 @@ namespace LeMounAPI.Controllers
             return Ok(result);
         }
 
+        // Create Vehicle
         [HttpPost]
-        public async Task<ActionResult<VehicleModel>> CreateUser(VehicleModel vehicleModel)
+        public async Task<ActionResult<VehicleModel>> CreateVehicle(VehicleModel vehicleModel)
         {
             await _modelService.Add(vehicleModel);
             return Ok(vehicleModel);
         }
 
+        // Update by id
         [HttpPut("{id}")]
-        public async Task<ActionResult<VehicleModel>> UpdateUser(long id, [FromBody] VehicleModel updatedVehicle)
+        public async Task<ActionResult<VehicleModel>> UpdateVehicle(long id, [FromBody] VehicleModel updatedVehicle)
         {
             var result = await _modelService.Update(id, updatedVehicle);
 
             return result;
         }
 
-        //Right now the Delete returns a 500 internal error if user not found NEEDS fixing 
-
+        // Delete by id
         [HttpDelete("{id}")]
-        public async Task<ActionResult<VehicleModel>> DeleteOrderById(long id)
+        public async Task<ActionResult<VehicleModel>> DeleteVehicleById(long id)
         {
 
             await _modelService.Delete(id);

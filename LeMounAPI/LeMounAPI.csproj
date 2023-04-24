@@ -35,6 +35,7 @@
     <None Remove="Repositories\VehicleRepository\" />
     <None Remove="Repositories\VehicleTypeRepository\" />
     <None Remove="Repositories\UserRoleRepository\" />
+    <None Remove="Repositories\CustomExceptions\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />
@@ -50,5 +51,6 @@
     <Folder Include="Repositories\VehicleRepository\" />
     <Folder Include="Repositories\VehicleTypeRepository\" />
     <Folder Include="Repositories\UserRoleRepository\" />
+    <Folder Include="Repositories\CustomExceptions\" />
   </ItemGroup>
 </Project>
