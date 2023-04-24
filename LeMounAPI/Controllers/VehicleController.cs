@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LeMounAPI.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -42,8 +43,8 @@ namespace LeMounAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<VehicleModel>> CreateVehicle(VehicleModel vehicleModel)
         {
-            await _modelService.Add(vehicleModel);
-            return Ok(vehicleModel);
+            return Ok(await _modelService.Add(vehicleModel));
+
         }
 
         // Update by id

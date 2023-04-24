@@ -1,5 +1,6 @@
 ﻿using System;
 using LeMounAPI.Repositories.CustomExceptions;
+using Microsoft.EntityFrameworkCore;
 
 namespace LeMounAPI.Repositories.VehicleRepository
 {
@@ -47,7 +48,9 @@ namespace LeMounAPI.Repositories.VehicleRepository
             await _dataContext.Vehicles.AddAsync(Vehicle);
             _dataContext.SaveChanges();
 
-            return vehicle;
+            var fetchVehicle = await _dataContext.Vehicles.FirstOrDefaultAsync(x => x.VehicleId == Vehicle.VehicleId);
+
+            return _mapper.Map<VehicleModel>(fetchVehicle);
         }
 
         // Finds the first vehicle that has the same id as the argument it takes, if found it updates the VehicleModel with the same data as fed.
